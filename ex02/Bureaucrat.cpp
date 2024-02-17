@@ -6,12 +6,12 @@
 /*   By: hyungdki <hyungdki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 10:47:31 by hyungdki          #+#    #+#             */
-/*   Updated: 2024/02/17 20:20:17 by hyungdki         ###   ########.fr       */
+/*   Updated: 2024/02/17 22:42:58 by hyungdki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
-#include "Form.hpp"
+#include "AForm.hpp"
 
 Bureaucrat::Bureaucrat() : name(""), grade(150) {
 	;
@@ -68,16 +68,32 @@ void Bureaucrat::decrement_grade(int n) {
 	}
 }
 
-void Bureaucrat::signForm(Form& form) {
+void Bureaucrat::signAForm(AForm& form) {
 	try{
 		form.beSigned(*this);
 		std::cout << name << " signed " << form.getName() << '\n';
-	} catch(const Form::GradeTooLowException& e1) {
+	} catch(const AForm::GradeTooLowException& e1) {
 		std::cerr << name << " couldn’t sign " << form.getName() \
 			<< " because signer's grade is lower than form's grade to sign!\n";
-	} catch(const Form::AlreadySignedException& e2) {
+	} catch(const AForm::AlreadySignedException& e2) {
 		std::cerr << name << " couldn’t sign " << form.getName() \
 			<< " because it is already signed!\n";
+	}
+}
+
+void Bureaucrat::executeForm(AForm const & form)
+{
+	try{
+		form.execute(*this);
+		std::cout << name << " executed " << form.getName() << '\n';
+	} catch(const AForm::NotSignedException& e1) {
+		std::cerr << name << " couldn’t execute " << form.getName() \
+			<< " because form isn't signed!\n";
+	} catch(const Bureaucrat::GradeTooLowException& e2) {
+		std::cerr << name << " couldn’t execute " << form.getName() \
+			<< " because executor's grade is lower than form's grade to execute!\n";
+	} catch(const std::exception& e3) {
+		std::cerr << e3.what() << '\n';
 	}
 }
 

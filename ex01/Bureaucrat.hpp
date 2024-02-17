@@ -6,7 +6,7 @@
 /*   By: hyungdki <hyungdki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 10:47:33 by hyungdki          #+#    #+#             */
-/*   Updated: 2024/02/17 19:32:55 by hyungdki         ###   ########.fr       */
+/*   Updated: 2024/02/17 20:20:22 by hyungdki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <string>
 #include <iostream>
 
-#define BUFFER_SIZE 1024
+#define BUFFER_SIZE0 1024
 
 class Form;
 
@@ -44,7 +44,7 @@ public:
 
 	class GradeException : public std::exception {
 		private:
-			char message[BUFFER_SIZE];
+			char message[BUFFER_SIZE0];
 			size_t len;
 
 			//not use

@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.hpp                                           :+:      :+:    :+:   */
+/*   AForm.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyungdki <hyungdki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 18:13:34 by hyungdki          #+#    #+#             */
-/*   Updated: 2024/02/17 20:19:57 by hyungdki         ###   ########.fr       */
+/*   Updated: 2024/02/17 19:32:46 by hyungdki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FORM_HPP
-#define FORM_HPP
+#ifndef AFORM_HPP
+#define AFORM_HPP
 
 #include <string>
 
@@ -19,7 +19,7 @@
 
 class Bureaucrat;
 
-class Form{
+class AForm{
 private:
 	const std::string name;
 	bool isSigned;
@@ -27,20 +27,22 @@ private:
 	const int gradeToExecute;
 
 	//not use
-	Form();
-	Form& operator=(const Form& origin);
+	AForm();
+	AForm& operator=(const AForm& origin);
 
 protected:
 
 public:
-	Form(const std::string& _name, int _gradeToSign, int _gradeToExecute);
-	Form(const Form& origin);
-	~Form();
+	AForm(const std::string& _name, int _gradeToSign, int _gradeToExecute);
+	AForm(const AForm& origin);
+	virtual ~AForm();
 	std::string getName() const;
 	int	getIsSigned() const;
 	int getGradeToSign() const;
 	int getGradeToExecute() const;
 	void beSigned(const Bureaucrat& signer);
+	void execute(Bureaucrat const & executor) const;
+	virtual void executeDetail() const = 0;
 	class GradeException : public std::exception {
 		private:
 			char message[BUFFER_SIZE1];
@@ -73,8 +75,10 @@ public:
 	};
 
 	class AlreadySignedException : public std::exception {};
+
+	class NotSignedException : public std::exception {};
 };
 
-std::ostream& operator<<(std::ostream& out, const Form& obj);
+std::ostream& operator<<(std::ostream& out, const AForm& obj);
 
 #endif
