@@ -6,12 +6,13 @@
 #    By: hyungdki <hyungdki@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 20:30:42 by hyungdki          #+#    #+#              #
-#    Updated: 2024/02/14 18:09:22 by hyungdki         ###   ########.fr        #
+#    Updated: 2024/02/17 19:25:48 by hyungdki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS =	main.cpp \
-		Bureaucrat.cpp
+		Bureaucrat.cpp \
+		Form.cpp
 
 OBJS = 	${SRCS:.cpp=.o}
 
@@ -21,7 +22,7 @@ CC = c++
 
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
-NAME = Bureaucrat
+NAME = Form
 
 ${NAME} : ${TOTAL_OBJS}
 	${CC} ${CFLAGS} ${TOTAL_OBJS} -o $@

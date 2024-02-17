@@ -6,14 +6,26 @@
 /*   By: hyungdki <hyungdki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 10:47:31 by hyungdki          #+#    #+#             */
-/*   Updated: 2024/02/14 18:10:50 by hyungdki         ###   ########.fr       */
+/*   Updated: 2024/02/17 18:24:56 by hyungdki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
 
+Bureaucrat::Bureaucrat() : name(""), grade(150)
+{
+	;
+}
+
 Bureaucrat::Bureaucrat(const std::string& _name) : name(_name), grade(150) {
 	;
+}
+
+Bureaucrat::Bureaucrat(const std::string& _name, const int _grade) : name(_name), grade(_grade) {
+	if (grade > 150)
+		throw GradeTooLowException(this->name.c_str());
+	else if (grade < 1)
+		throw GradeTooHighException(this->name.c_str());
 }
 
 Bureaucrat::Bureaucrat(const Bureaucrat& origin) : name(origin.name), grade(origin.grade) {
@@ -65,7 +77,7 @@ void Bureaucrat::decrement_grade(int n) {
 
 Bureaucrat::GradeTooHighException::GradeTooHighException(const char* who) {
 	
-	static const char* exception_msg = "'s grade exceed 1. Grade unchanged.";
+	static const char* exception_msg = "'s grade exceed 1!";
 	
 	len = 0;
 	while (who[len] != '\0' && len < BUFFER_SIZE - strlen(exception_msg) - 1) {
@@ -88,7 +100,7 @@ const char* Bureaucrat::GradeTooHighException::what() const throw()
 
 Bureaucrat::GradeTooLowException::GradeTooLowException(const char* who) {
 	
-	static const char* exception_msg = "'s grade below 150. Grade unchanged.";
+	static const char* exception_msg = "'s grade below 150!";
 	
 	len = 0;
 	while (who[len] != '\0' && len < BUFFER_SIZE - strlen(exception_msg) - 1) {

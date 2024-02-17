@@ -6,9 +6,12 @@
 /*   By: hyungdki <hyungdki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 10:47:33 by hyungdki          #+#    #+#             */
-/*   Updated: 2024/02/14 18:00:55 by hyungdki         ###   ########.fr       */
+/*   Updated: 2024/02/17 18:14:31 by hyungdki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef BUREAUCRAT_HPP
+#define BUREAUCRAT_HPP
 
 #include <string>
 #include <iostream>
@@ -23,8 +26,11 @@ private:
 	//not use
 	Bureaucrat();
 
+protected:
+
 public:
-	Bureaucrat(const std::string& name);
+	Bureaucrat(const std::string& _name);
+	Bureaucrat(const std::string& _name, const int _grade);
 	Bureaucrat(const Bureaucrat& origin);
 	Bureaucrat& operator=(const Bureaucrat& origin);
 	~Bureaucrat();
@@ -69,3 +75,5 @@ public:
 };
 
 std::ostream& operator<<(std::ostream& out, const Bureaucrat& obj);
+
+#endif

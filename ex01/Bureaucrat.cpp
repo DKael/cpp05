@@ -6,14 +6,26 @@
 /*   By: hyungdki <hyungdki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 10:47:31 by hyungdki          #+#    #+#             */
-/*   Updated: 2024/02/14 18:10:50 by hyungdki         ###   ########.fr       */
+/*   Updated: 2024/02/17 19:23:39 by hyungdki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
+#include "Form.hpp"
+
+Bureaucrat::Bureaucrat() : name(""), grade(150) {
+	;
+}
 
 Bureaucrat::Bureaucrat(const std::string& _name) : name(_name), grade(150) {
 	;
+}
+
+Bureaucrat::Bureaucrat(const std::string& _name, const int _grade) : name(_name), grade(_grade) {
+	if (grade > 150)
+		throw GradeTooLowException(this->name.c_str());
+	else if (grade < 1)
+		throw GradeTooHighException(this->name.c_str());
 }
 
 Bureaucrat::Bureaucrat(const Bureaucrat& origin) : name(origin.name), grade(origin.grade) {
@@ -40,7 +52,6 @@ int Bureaucrat::getGrade() const {
 void Bureaucrat::increment_grade(int n) {
 	if (grade - n < 1) {
 		throw GradeTooHighException(this->name.c_str());
-		//throw GradeTooHighException(this->name);
 	}
 	else {
 		grade -= n;
@@ -51,61 +62,57 @@ void Bureaucrat::decrement_grade(int n) {
 	
 	if (grade + n > 150) {
 		throw GradeTooLowException(this->name.c_str());
-		//throw GradeTooLowException(this->name);
 	}
 	else {
 		grade += n;
 	}
 }
 
-// Bureaucrat::GradeTooHighException::GradeTooHighException(const std::string& _who) : who(_who)
-// {
-// 	message = who + "'s grade exceed 0. grade unchanged.";
-// }
-
-Bureaucrat::GradeTooHighException::GradeTooHighException(const char* who) {
-	
-	static const char* exception_msg = "'s grade exceed 1. Grade unchanged.";
-	
-	len = 0;
-	while (who[len] != '\0' && len < BUFFER_SIZE - strlen(exception_msg) - 1) {
-		message[len] = who[len];
-		len++;
+void Bureaucrat::signForm(Form& form) {
+	try{
+		form.beSigned(*this);
+		std::cout << name << " signed " << form.getName() << '\n';
+	} catch(const Form::GradeTooLowException& e1) {
+		std::cout << name << " couldn’t sign " << form.getName() \
+			<< " because signer's grade is lower than form's grade to sign!\n";
+	} catch(const Form::AlreadySignedException& e2) {
+		std::cout << name << " couldn’t sign " << form.getName() \
+			<< " because it is already signed!\n";
 	}
-	strcpy(&message[len], exception_msg);
 }
 
-const char* Bureaucrat::GradeTooHighException::what() const throw()
-{
-	//return message.c_str();
+Bureaucrat::GradeException::GradeException(const char* who, const char* exceptionMsg) {
+	static const char* type = "Bureaucrat ";
+	size_t offset;
+	int idx;
+	
+	strcpy(message, type);
+	len = strlen(type);
+	offset = strlen(exceptionMsg) + 1;
+	idx = 0;
+	while (who[idx] != '\0' && len < BUFFER_SIZE - offset) {
+		message[len] = who[idx];
+		idx++;
+		len++;
+	}
+	strcpy(&message[len], exceptionMsg);
+}
+
+const char* Bureaucrat::GradeException::what() const throw() {
 	return message;
 }
 
-// Bureaucrat::GradeTooLowException::GradeTooLowException(const std::string& _who) : who(_who)
-// {
-// 	message = who + "'s grade is is below 150. grade unchanged.";
-// }
-
-Bureaucrat::GradeTooLowException::GradeTooLowException(const char* who) {
-	
-	static const char* exception_msg = "'s grade below 150. Grade unchanged.";
-	
-	len = 0;
-	while (who[len] != '\0' && len < BUFFER_SIZE - strlen(exception_msg) - 1) {
-		message[len] = who[len];
-		len++;
-	}
-	strcpy(&message[len], exception_msg);
+Bureaucrat::GradeTooHighException::GradeTooHighException(const char* who)
+	: GradeException(who, "'s grade exceed 1!") {
+	;
 }
 
-const char* Bureaucrat::GradeTooLowException::what() const throw()
-{
-	//return message.c_str();
-	return message;
+Bureaucrat::GradeTooLowException::GradeTooLowException(const char* who) 
+	: GradeException(who, "'s grade below 150!") {
+	;
 }
 
-std::ostream& operator<<(std::ostream& out, const Bureaucrat& obj)
-{
+std::ostream& operator<<(std::ostream& out, const Bureaucrat& obj) {
 	out << obj.getName() << ", bureaucrat grade " << obj.getGrade() << ".";
 	return out;
 }
