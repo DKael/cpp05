@@ -13,65 +13,65 @@
 #ifndef BUREAUCRAT_HPP
 #define BUREAUCRAT_HPP
 
-#include <string>
+#include <cstring>
 #include <iostream>
+#include <string>
 
 #define BUFFER_SIZE0 1024
 
 class Form;
 
 class Bureaucrat {
-private:
-	const std::string name;
-	int grade;
+ private:
+  const std::string name;
+  int grade;
 
-	//not use
-	Bureaucrat();
+  // not use
+  Bureaucrat();
 
-protected:
+ protected:
+ public:
+  Bureaucrat(const std::string& _name);
+  Bureaucrat(const std::string& _name, const int _grade);
+  Bureaucrat(const Bureaucrat& origin);
+  Bureaucrat& operator=(const Bureaucrat& origin);
+  ~Bureaucrat();
+  std::string getName() const;
+  int getGrade() const;
+  void increment_grade(int n);
+  void decrement_grade(int n);
+  void signForm(Form& form);
 
-public:
-	Bureaucrat(const std::string& _name);
-	Bureaucrat(const std::string& _name, const int _grade);
-	Bureaucrat(const Bureaucrat& origin);
-	Bureaucrat& operator=(const Bureaucrat& origin);
-	~Bureaucrat();
-	std::string getName() const;
-	int getGrade() const;
-	void increment_grade(int n);
-	void decrement_grade(int n);
-	void signForm(Form& form);
+  class GradeException : public std::exception {
+   private:
+    char message[BUFFER_SIZE0];
+    size_t len;
 
-	class GradeException : public std::exception {
-		private:
-			char message[BUFFER_SIZE0];
-			size_t len;
+    // not use
+    GradeException();
 
-			//not use
-			GradeException();
-			
-		public:
-			GradeException(const char* who, const char* exceptionMsg);
-			const char* what() const throw();
-	};
+   public:
+    GradeException(const char* who, const char* exceptionMsg);
+    const char* what() const throw();
+  };
 
-	class GradeTooHighException : public GradeException {
-		private:
-			//not use
-			GradeTooHighException();
-			
-		public:
-			GradeTooHighException(const char* who);
-	};
+  class GradeTooHighException : public GradeException {
+   private:
+    // not use
+    GradeTooHighException();
 
-	class GradeTooLowException : public GradeException {
-		private:
-			//not use
-			GradeTooLowException();
+   public:
+    GradeTooHighException(const char* who);
+  };
 
-		public:
-			GradeTooLowException(const char* who);
-	};
+  class GradeTooLowException : public GradeException {
+   private:
+    // not use
+    GradeTooLowException();
+
+   public:
+    GradeTooLowException(const char* who);
+  };
 };
 
 std::ostream& operator<<(std::ostream& out, const Bureaucrat& obj);
