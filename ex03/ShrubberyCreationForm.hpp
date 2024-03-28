@@ -13,29 +13,30 @@
 #ifndef SHRUBBERYCREATIONFORM_HPP
 #define SHRUBBERYCREATIONFORM_HPP
 
+#include <exception>
+#include <fstream>
 #include <iostream>
 #include <sstream>
-#include <fstream>
+
 #include "AForm.hpp"
 
 class ShrubberyCreationForm : public AForm {
-private:
-	static int count;
-	std::string target;
+ private:
+  static int count;
+  std::string target;
 
-	std::string intToString(int num);
+  std::string intToString(int num);
 
-	//not use
-	ShrubberyCreationForm();
-	
-protected:
+  // not use
+  ShrubberyCreationForm();
 
-public:
-	ShrubberyCreationForm(const std::string& _target);
-	ShrubberyCreationForm(const ShrubberyCreationForm& origin);
-	ShrubberyCreationForm& operator=(const ShrubberyCreationForm& origin);
-	~ShrubberyCreationForm();
-	void executeDetail() const;
+ protected:
+ public:
+  ShrubberyCreationForm(const std::string& _target);
+  ShrubberyCreationForm(const ShrubberyCreationForm& origin);
+  ShrubberyCreationForm& operator=(const ShrubberyCreationForm& origin);
+  ~ShrubberyCreationForm();
+  void executeDetail() const;
 };
 
 #endif
