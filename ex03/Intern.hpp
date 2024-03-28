@@ -15,26 +15,26 @@
 
 #include <iostream>
 #include <string>
+
 #include "PresidentialPardonForm.hpp"
 #include "RobotomyRequestForm.hpp"
 #include "ShrubberyCreationForm.hpp"
 
 class Intern {
-private:
-	AForm* makePresidentialPardonForm(const std::string _target);
-	AForm* makeRobotomyRequestForm(const std::string _target);
-	AForm* makeShrubberyCreationForm(const std::string _target);
+ private:
+  AForm* makePresidentialPardonForm(const std::string _target);
+  AForm* makeRobotomyRequestForm(const std::string _target);
+  AForm* makeShrubberyCreationForm(const std::string _target);
 
-protected:
+ protected:
+ public:
+  Intern();
+  Intern(const Intern& origin);
+  Intern& operator=(const Intern& origin);
+  ~Intern();
+  AForm* makeForm(const std::string& _name, const std::string& _target);
 
-public:
-	Intern();
-	Intern(const Intern& origin);
-	Intern& operator=(const Intern& origin);
-	~Intern();
-	AForm* makeForm(const std::string& _name, const std::string& _target);
-
-	class InvalidForm : public std::exception {};
+  class InvalidForm : public std::exception {};
 };
 
 #endif

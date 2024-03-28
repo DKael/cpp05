@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   AForm.hpp                                           :+:      :+:    :+:   */
+/*   AForm.hpp                                           :+:      :+:    :+: */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyungdki <hyungdki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -19,64 +19,63 @@
 
 class Bureaucrat;
 
-class AForm{
-private:
-	const std::string name;
-	bool isSigned;
-	const int gradeToSign;
-	const int gradeToExecute;
+class AForm {
+ private:
+  const std::string name;
+  bool isSigned;
+  const int gradeToSign;
+  const int gradeToExecute;
 
-	//not use
-	AForm();
-	AForm& operator=(const AForm& origin);
+  // not use
+  AForm();
+  AForm& operator=(const AForm& origin);
 
-protected:
+ protected:
+ public:
+  AForm(const std::string& _name, int _gradeToSign, int _gradeToExecute);
+  AForm(const AForm& origin);
+  virtual ~AForm();
+  std::string getName() const;
+  int getIsSigned() const;
+  int getGradeToSign() const;
+  int getGradeToExecute() const;
+  void beSigned(const Bureaucrat& signer);
+  void execute(Bureaucrat const& executor) const;
+  virtual void executeDetail() const = 0;
+  class GradeException : public std::exception {
+   private:
+    char message[BUFFER_SIZE1];
+    size_t len;
 
-public:
-	AForm(const std::string& _name, int _gradeToSign, int _gradeToExecute);
-	AForm(const AForm& origin);
-	virtual ~AForm();
-	std::string getName() const;
-	int	getIsSigned() const;
-	int getGradeToSign() const;
-	int getGradeToExecute() const;
-	void beSigned(const Bureaucrat& signer);
-	void execute(Bureaucrat const & executor) const;
-	virtual void executeDetail() const = 0;
-	class GradeException : public std::exception {
-		private:
-			char message[BUFFER_SIZE1];
-			size_t len;
+    // not use
+    GradeException();
 
-			//not use
-			GradeException();
-			
-		public:
-			GradeException(const char* who, const char* exceptionMsg);
-			const char* what() const throw();
-	};
+   public:
+    GradeException(const char* who, const char* exceptionMsg);
+    const char* what() const throw();
+  };
 
-	class GradeTooHighException : public GradeException {
-		private:
-			//not use
-			GradeTooHighException();
-			
-		public:
-			GradeTooHighException(const char* who);
-	};
+  class GradeTooHighException : public GradeException {
+   private:
+    // not use
+    GradeTooHighException();
 
-	class GradeTooLowException : public GradeException {
-		private:
-			//not use
-			GradeTooLowException();
+   public:
+    GradeTooHighException(const char* who);
+  };
 
-		public:
-			GradeTooLowException(const char* who);
-	};
+  class GradeTooLowException : public GradeException {
+   private:
+    // not use
+    GradeTooLowException();
 
-	class AlreadySignedException : public std::exception {};
+   public:
+    GradeTooLowException(const char* who);
+  };
 
-	class NotSignedException : public std::exception {};
+  class AlreadySignedException : public std::exception {};
+
+  class NotSignedException : public std::exception {};
 };
 
 std::ostream& operator<<(std::ostream& out, const AForm& obj);

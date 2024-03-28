@@ -11,36 +11,34 @@
 /* ************************************************************************** */
 
 #include <iostream>
+
 #include "Bureaucrat.hpp"
 
 int main() {
-	Bureaucrat bur1("name1");
-	Bureaucrat bur2(bur1);
-	Bureaucrat bur3("name3");
+  Bureaucrat bur1("name1");
+  Bureaucrat bur2(bur1);
+  Bureaucrat bur3("name3");
 
-	try {
-		bur2.increment_grade(100);
-		bur3.increment_grade(149);
-	}
-	catch(const std::exception& e) {
-		std::cerr << e.what() << '\n';
-	}
+  try {
+    bur2.increment_grade(100);
+    bur3.increment_grade(149);
+  } catch (const std::exception& e) {
+    std::cerr << e.what() << '\n';
+  }
 
-	std::cout << bur1 << "\n" << bur2 << "\n" << bur3 << "\n" ;
+  std::cout << bur1 << "\n" << bur2 << "\n" << bur3 << "\n";
 
-	try {
-		bur1.decrement_grade(1);
-	}
-	catch(const std::exception& e) {
-		std::cerr << e.what() << '\n';
-	}
+  try {
+    bur1.decrement_grade(1);
+  } catch (const std::exception& e) {
+    std::cerr << e.what() << '\n';
+  }
 
-	try {
-		bur3.increment_grade(149);
-	}
-	catch(const std::exception& e) {
-		std::cerr << e.what() << '\n';
-	}
+  try {
+    bur3.increment_grade(149);
+  } catch (const std::exception& e) {
+    std::cerr << e.what() << '\n';
+  }
 
-	return 0;
+  return 0;
 }

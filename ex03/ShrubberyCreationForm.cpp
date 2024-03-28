@@ -51,7 +51,8 @@ ShrubberyCreationForm& ShrubberyCreationForm::operator=(
 ShrubberyCreationForm::~ShrubberyCreationForm() { ; }
 
 void ShrubberyCreationForm::executeDetail() const {
-  const char* fileName = (target + "_shrubbery").c_str();
+  const char* fileName;
+  fileName = (target + "_shrubbery").c_str();
   std::ofstream out(fileName);
   std::string shrubbery =
       "               ,@@@@@@@,\n"

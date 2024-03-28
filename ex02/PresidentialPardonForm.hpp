@@ -15,26 +15,26 @@
 
 #include <iostream>
 #include <sstream>
+
 #include "AForm.hpp"
 
 class PresidentialPardonForm : public AForm {
-private:
-	static int count;
-	std::string target;
+ private:
+  static int count;
+  std::string target;
 
-	std::string intToString(int num);
+  std::string intToString(int num);
 
-	//not use
-	PresidentialPardonForm();
-	
-protected:
+  // not use
+  PresidentialPardonForm();
 
-public:
-	PresidentialPardonForm(const std::string& _target);
-	PresidentialPardonForm(const PresidentialPardonForm& origin);
-	PresidentialPardonForm& operator=(const PresidentialPardonForm& origin);
-	~PresidentialPardonForm();
-	void executeDetail() const;
+ protected:
+ public:
+  PresidentialPardonForm(const std::string& _target);
+  PresidentialPardonForm(const PresidentialPardonForm& origin);
+  PresidentialPardonForm& operator=(const PresidentialPardonForm& origin);
+  ~PresidentialPardonForm();
+  void executeDetail() const;
 };
 
 #endif

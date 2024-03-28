@@ -13,30 +13,30 @@
 #ifndef ROBOTOMYREQUESTFORM_HPP
 #define ROBOTOMYREQUESTFORM_HPP
 
-#include <iostream>
-#include <sstream>
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
+#include <sstream>
+
 #include "AForm.hpp"
 
 class RobotomyRequestForm : public AForm {
-private:
-	static int count;
-	std::string target;
+ private:
+  static int count;
+  std::string target;
 
-	std::string intToString(int num);
+  std::string intToString(int num);
 
-	//not use
-	RobotomyRequestForm();
-	
-protected:
+  // not use
+  RobotomyRequestForm();
 
-public:
-	RobotomyRequestForm(const std::string& _target);
-	RobotomyRequestForm(const RobotomyRequestForm& origin);
-	RobotomyRequestForm& operator=(const RobotomyRequestForm& origin);
-	~RobotomyRequestForm();
-	void executeDetail() const;
+ protected:
+ public:
+  RobotomyRequestForm(const std::string& _target);
+  RobotomyRequestForm(const RobotomyRequestForm& origin);
+  RobotomyRequestForm& operator=(const RobotomyRequestForm& origin);
+  ~RobotomyRequestForm();
+  void executeDetail() const;
 };
 
 #endif
