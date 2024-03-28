@@ -13,7 +13,6 @@
 #ifndef SHRUBBERYCREATIONFORM_HPP
 #define SHRUBBERYCREATIONFORM_HPP
 
-#include <exception>
 #include <fstream>
 #include <iostream>
 #include <sstream>

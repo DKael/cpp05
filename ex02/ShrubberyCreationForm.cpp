@@ -14,51 +14,59 @@
 
 int ShrubberyCreationForm::count = 0;
 
-std::string ShrubberyCreationForm::intToString(int num)
-{
-	std::ostringstream strm;
-	strm << num;
-	return strm.str();
+std::string ShrubberyCreationForm::intToString(int num) {
+  std::ostringstream strm;
+  strm << num;
+  return strm.str();
 }
 
 ShrubberyCreationForm::ShrubberyCreationForm()
-	: AForm("ShrubberyCreationForm" + intToString(ShrubberyCreationForm::count), 145, 137), target("") {
-	ShrubberyCreationForm::count++;
+    : AForm("ShrubberyCreationForm" + intToString(ShrubberyCreationForm::count),
+            145, 137),
+      target("") {
+  ShrubberyCreationForm::count++;
 }
 
 ShrubberyCreationForm::ShrubberyCreationForm(const std::string& _target)
-	: AForm("ShrubberyCreationForm" + intToString(ShrubberyCreationForm::count), 145, 137), target(_target) {
-	ShrubberyCreationForm::count++;
+    : AForm("ShrubberyCreationForm" + intToString(ShrubberyCreationForm::count),
+            145, 137),
+      target(_target) {
+  ShrubberyCreationForm::count++;
 }
 
-ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& origin)
-	: AForm("ShrubberyCreationForm" + intToString(ShrubberyCreationForm::count), 145, 137), target(origin.target) {
-	ShrubberyCreationForm::count++;
+ShrubberyCreationForm::ShrubberyCreationForm(
+    const ShrubberyCreationForm& origin)
+    : AForm("ShrubberyCreationForm" + intToString(ShrubberyCreationForm::count),
+            145, 137),
+      target(origin.target) {
+  ShrubberyCreationForm::count++;
 }
 
-ShrubberyCreationForm& ShrubberyCreationForm::operator=(const ShrubberyCreationForm& origin) {
-	target = origin.target;
-	return *this;
+ShrubberyCreationForm& ShrubberyCreationForm::operator=(
+    const ShrubberyCreationForm& origin) {
+  target = origin.target;
+  return *this;
 }
 
-ShrubberyCreationForm::~ShrubberyCreationForm() {
-	;
-}
+ShrubberyCreationForm::~ShrubberyCreationForm() { ; }
 
 void ShrubberyCreationForm::executeDetail() const {
-	std::ofstream out(target + "_shrubbery");
-	std::string	shrubbery =	"               ,@@@@@@@,\n"
-							"       ,,,.   ,@@@@@@/@@,  .oo8888o.\n"
-							"    ,&%%&%&&%,@@@@@/@@@@@@,8888\\88/8o\n"
-							"   ,%&\\%&&%&&%,@@@\\@@@/@@@88\\88888/88'\n"
-							"   %&&%&%&/%&&%@@\\@@/ /@@@88888\\88888'\n"
-							"   %&&%/ %&%%&&@@\\ V /@@' `88\\8 `/88'\n"
-							"   `&%\\ ` /%&'    |.|        \\ '|8'\n"
-							"       |o|        | |         | |\n"
-							"       |.|        | |         | |\n"
-							"    \\\\/ ._\\//_/__/  ,\\_//__\\\\/.  \\_//__/_";
-	if (out.is_open() == false)
-		throw std::system_error(errno, std::generic_category(), target + "_shrubbery");
-	out << shrubbery;
-	out.close();
+  const char* fileName;
+  fileName = (target + "_shrubbery").c_str();
+  std::ofstream out(fileName);
+  std::string shrubbery =
+      "               ,@@@@@@@,\n"
+      "       ,,,.   ,@@@@@@/@@,  .oo8888o.\n"
+      "    ,&%%&%&&%,@@@@@/@@@@@@,8888\\88/8o\n"
+      "   ,%&\\%&&%&&%,@@@\\@@@/@@@88\\88888/88'\n"
+      "   %&&%&%&/%&&%@@\\@@/ /@@@88888\\88888'\n"
+      "   %&&%/ %&%%&&@@\\ V /@@' `88\\8 `/88'\n"
+      "   `&%\\ ` /%&'    |.|        \\ '|8'\n"
+      "       |o|        | |         | |\n"
+      "       |.|        | |         | |\n"
+      "    \\\\/ ._\\//_/__/  ,\\_//__\\\\/.  \\_//__/_";
+  if (out.is_open() == false)
+    throw std::ofstream::failure(std::string("File open error!"));
+  out << shrubbery;
+  out.close();
 }
